@@ -13,7 +13,7 @@ const studentSchema=new mongoose.Schema({
 
 // Creating model
 
-const StudnetModel=mongoose.model('student',studentSchema)
+const StudentModel=mongoose.model('student',studentSchema)
 
 
-export default StudnetModel
+export default StudentModel

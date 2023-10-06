@@ -1,49 +1,82 @@
-import StudnetModel from "../modules/Student.js";
+import StudentModel from "../modules/Student.js";
 
+class StudentController {
+  // Data creation
+  static createDoc = async (req, res) => {
 
+    try{
 
-class StudentController{
+        const {name,age,fees}=req.body
 
+        const doc=new StudentModel({
+            name:name,
+            age:age,
+            fees:fees
+        })
 
-    // Data creation
-    static createDoc=(req,res)=>{
+        const result= await doc.save()
+        res.status(201).send(result)
 
-        res.send('Data created....')
     }
-
-    // Display data
-
-    static getAllDoc=(req,res)=>{
-
-        res.send('All docs...')
+    catch(err){
+        console.log(err)
     }
+    
+    
+  };
 
+  // Display all data
 
-    // Get single doc
-
-    static getSingleDocById=(req,res)=>{
-
-        res.send('Get single doc by id....')
+  static getAllDoc = async (req, res) => {
+    try {
+      const result = await StudentModel.find();
+      res.send(result);
+    } catch (err) {
+      console.log(err);
     }
+  };
 
+  // Get single doc by id
 
-    // update doc by id
+  static getSingleDocById = async (req, res) => {
 
-    static updateDocById=(req,res)=>{
-
-        res.send('Update doc by id....')
+    try {
+      const result = await StudentModel.findById(req.params.id);
+      res.send(result);
+    } catch (err) {
+      console.log(err);
     }
+   
+  };
 
-    // Delete doc by id
+  // update doc by id
 
-    static deleteDocById=(req,res)=>{
+  static updateDocById = async(req, res) => {
 
-        res.send('delete doc by id....')
+    try{
+         const result = await StudentModel.findByIdAndUpdate(req.params.id,req.body);
+         res.send(result)
+
+    }catch(err){
+        console.log(err)
     }
+    
+  };
 
 
 
+  // Delete doc by id
 
+  static deleteDocById = async(req, res) => {
+    try {
+        const result= await StudentModel.findByIdAndDelete(req.params.id)
+        res.status(204).send(result)
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
+  };
 }
 
 export default StudentController;
